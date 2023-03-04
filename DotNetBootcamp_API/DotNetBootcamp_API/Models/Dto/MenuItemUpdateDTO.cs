@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DotNetBootcamp_API.Models
+namespace DotNetBootcamp_API.Models.Dto
 {
-    public class MenuItem
+    public class MenuItemUpdateDTO
     {
         [Key]
         public int Id { get; set; }
@@ -13,8 +13,7 @@ namespace DotNetBootcamp_API.Models
         public string Category { get; set; }
         [Range(1, int.MaxValue)]
         public double Price { get; set; }
-        [Required]
-        public string Image { get; set; }
-        // Nếu muốn thêm một mảng các ảnh nữa thì thêm List<Image> Images hoặc là ICollection<Image> Images (nghĩ vệi)
+        public IFormFile File { get; set; }
+
     }
 }
