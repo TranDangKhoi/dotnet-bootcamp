@@ -6,7 +6,11 @@ using DotNetBootcamp_API.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Security.Claims;
+using System.Text;
 
 namespace DotNetBootcamp_API.Controllers
 {
@@ -33,10 +37,11 @@ namespace DotNetBootcamp_API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO model)
         {
             ApplicationUser userFromDb = _db.ApplicationUsers
-                .FirstOrDefault(u => u.UserName.ToLower() == model.Username.ToLower());
+                    .FirstOrDefault(u => u.UserName.ToLower() == model.Username.ToLower());
 
             bool isValid = await _userManager.CheckPasswordAsync(userFromDb, model.Password);
-            if (!isValid)
+
+            if (isValid == false)
             {
                 _response.Result = new LoginResponseDTO();
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -44,11 +49,31 @@ namespace DotNetBootcamp_API.Controllers
                 _response.ErrorMessages.Add("Username or password is incorrect");
                 return BadRequest(_response);
             }
-            // else we will generate a JWT TOKEN !!!! :OOOOO
+
+            //we have to generate JWT Token
+            var roles = await _userManager.GetRolesAsync(userFromDb);
+            JwtSecurityTokenHandler tokenHandler = new();
+            byte[] key = Encoding.ASCII.GetBytes(secretKey);
+
+            SecurityTokenDescriptor tokenDescriptor = new()
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim("fullName", userFromDb.Name),
+                    new Claim("id", userFromDb.Id.ToString()),
+                    new Claim(ClaimTypes.Email, userFromDb.UserName.ToString()),
+                    new Claim(ClaimTypes.Role, roles.FirstOrDefault()),
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+
             LoginResponseDTO loginResponse = new()
             {
                 Email = userFromDb.Email,
-                Token = "test"
+                Token = tokenHandler.WriteToken(token)
             };
 
             if (loginResponse.Email == null || string.IsNullOrEmpty(loginResponse.Token))
@@ -58,6 +83,12 @@ namespace DotNetBootcamp_API.Controllers
                 _response.ErrorMessages.Add("Username or password is incorrect");
                 return BadRequest(_response);
             }
+
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
+            _response.Result = loginResponse;
+            return Ok(_response);
+
         }
 
         [HttpPost("register")]
