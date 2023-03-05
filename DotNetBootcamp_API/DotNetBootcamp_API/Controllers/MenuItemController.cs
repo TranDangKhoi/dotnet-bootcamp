@@ -11,7 +11,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace DotNetBootcamp_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/MenuItem")]
     [ApiController]
     public class MenuItemController : ControllerBase
     {
@@ -39,16 +39,19 @@ namespace DotNetBootcamp_API.Controllers
             if (id == 0)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
                 return BadRequest(_response);
             }
             MenuItem menuItem = _db.MenuItems.FirstOrDefault(u => u.Id == id);
             if (menuItem == null)
             {
                 _response.StatusCode = HttpStatusCode.NotFound;
+                _response.IsSuccess = false;
                 return NotFound(_response);
             }
             _response.Result = menuItem;
             _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
             return Ok(_response);
         }
 
@@ -107,12 +110,15 @@ namespace DotNetBootcamp_API.Controllers
                 {
                     if (menuItemUpdateDTO == null || id != menuItemUpdateDTO.Id)
                     {
-
+                        _response.StatusCode = HttpStatusCode.BadRequest;
+                        _response.IsSuccess = false;
                         return BadRequest();
                     }
                     MenuItem menuItemFromDb = await _db.MenuItems.FindAsync(id);
                     if (menuItemFromDb == null)
                     {
+                        _response.StatusCode = HttpStatusCode.BadRequest;
+                        _response.IsSuccess = false;
                         return BadRequest();
                     }
 
