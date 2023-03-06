@@ -101,6 +101,7 @@ namespace DotNetBootcamp_API.Controllers
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
+                // Replace "Username" with "Email"
                 _response.ErrorMessages.Add("Username already exists");
                 return BadRequest(_response);
             }
@@ -108,7 +109,9 @@ namespace DotNetBootcamp_API.Controllers
             ApplicationUser newUser = new()
             {
                 UserName = model.Username,
+                // Thay thế Username thành Email
                 Email = model.Username,
+                // Thay thế Username thành Email
                 NormalizedEmail = model.Username.ToUpper(),
                 Name = model.Name
             };
@@ -118,9 +121,14 @@ namespace DotNetBootcamp_API.Controllers
                 var result = await _userManager.CreateAsync(newUser, model.Password);
                 if (result.Succeeded)
                 {
+                    // Nếu success thì nên trả ra token luôn
+                    // LƯU Ý: PHẢI TẠO RA RegisterResponseDTO.cs để khi api response sẽ trả ra token lun, không cần phải đăng nhập mới trả token
+
+
+                    // Thay đổi logic chỗ này, role của  người mới tạo mặc định sẽ là user 
                     if (!_roleManager.RoleExistsAsync(SD.Role_Admin).GetAwaiter().GetResult())
                     {
-                        //create roles in database
+                        // Tạo roles trong DB
                         await _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin));
                         await _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer));
                     }
