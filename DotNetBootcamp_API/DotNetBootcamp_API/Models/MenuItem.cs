@@ -16,5 +16,6 @@ namespace DotNetBootcamp_API.Models
         [Required]
         public string Image { get; set; }
         // Nếu muốn thêm một mảng các ảnh nữa thì thêm List<Image> Images hoặc là ICollection<Image> Images (nghĩ vệi)
+        
     }
 }
