@@ -104,10 +104,12 @@ namespace DotNetBootcamp_API.Controllers
 
                 // I don't want anything to poke in the database anymore, so imma use the shoppingCart i created above
                 // CartItem cartItemInDb = _db.CartItems.FirstOrDefault(u => u.MenuItemId == menuItemId);
+                // Đây là lấy ra tất cả các cartItems hiện tại đang có trong giỏ hàng mà có MenuItemId trùng với id của cái MenuItem mình vừa thêm vào cart
                 CartItem cartItemInCart = shoppingCart.CartItems.FirstOrDefault(u => u.MenuItemId == model.menuItemId);
+                // Nếu sản phẩm đó hiện tại đang không có trong giỏ hàng
                 if (cartItemInCart == null)
                 {
-                    // Item does not exist in current cart
+                    // Thì ta sẽ tạo một cái CartItem mới trong giỏ hàng đó, với các thông tin người dùng truyền vào
                     CartItem newCartItem = new()
                     {
                         MenuItemId = model.menuItemId,
