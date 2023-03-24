@@ -171,6 +171,7 @@ namespace DotNetBootcamp_API.Controllers
                 {
                     return BadRequest();
                 }
+                // Lấy các phần nằm sau dấu /
                 await _blobService.DeleteBlob(menuItemFromDb.Image.Split("/").Last(), SD.SD_Storage_Container);
                 int miliseconds = 1000;
                 Thread.Sleep(miliseconds);

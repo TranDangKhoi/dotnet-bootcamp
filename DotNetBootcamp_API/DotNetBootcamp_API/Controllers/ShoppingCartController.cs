@@ -67,7 +67,8 @@ namespace DotNetBootcamp_API.Controllers
              //when users add a new item to an existing shopping cart (basically users have other items in cart)
              //when users update an existing item count
              //when users remove an existing item
-            ShoppingCart shoppingCart = _db.ShoppingCarts.Include(u=>u.CartItems).FirstOrDefault(u => u.UserId == userId);   
+
+            ShoppingCart shoppingCart = _db.ShoppingCarts.Include(u=>u.CartItems).FirstOrDefault(u => u.UserId == userId);
             MenuItem menuItem = _db.MenuItems.FirstOrDefault(u => u.Id == model.menuItemId);
             if (menuItem == null)
             {
@@ -77,12 +78,13 @@ namespace DotNetBootcamp_API.Controllers
                 return NotFound(_response);
             }
             if(shoppingCart == null && model.updateQuantityBy > 0) {
+                // Trường hợp 1: Người dùng chưa có giỏ hàng
 
                 // Create a shopping cart for current user in the database & add cart item if the user hasn't add any items to the cart
                 ShoppingCart newCart = new() { UserId = userId };
                 _db.ShoppingCarts.Add(newCart);
                 _db.SaveChanges();
-
+                // Thêm sản phẩm đó vào giỏ dựa theo RequestDTO
                 CartItem newCartItem = new()
                 {
                     MenuItemId = model.menuItemId,
@@ -100,10 +102,10 @@ namespace DotNetBootcamp_API.Controllers
             }
             else
             {
+                
                 // The user's already having a shopping cart?
 
-                // I don't want anything to poke in the database anymore, so imma use the shoppingCart i created above
-                // CartItem cartItemInDb = _db.CartItems.FirstOrDefault(u => u.MenuItemId == menuItemId);
+                
                 // Đây là lấy ra tất cả các cartItems hiện tại đang có trong giỏ hàng mà có MenuItemId trùng với id của cái MenuItem mình vừa thêm vào cart
                 CartItem cartItemInCart = shoppingCart.CartItems.FirstOrDefault(u => u.MenuItemId == model.menuItemId);
                 // Nếu sản phẩm đó hiện tại đang không có trong giỏ hàng
@@ -115,7 +117,7 @@ namespace DotNetBootcamp_API.Controllers
                         MenuItemId = model.menuItemId,
                         Quantity = model.updateQuantityBy,
                         ShoppingCartId = shoppingCart.Id,
-                        // If you don't set this to null, it will create a new MenuItem in the MenuItem table
+                        // Nếu không set cái này là null thì sẽ lỗi
                         MenuItem = null
                     };
                     _db.CartItems.Add(newCartItem);
@@ -126,8 +128,13 @@ namespace DotNetBootcamp_API.Controllers
                     return Ok(_response);
                 } else
                 {
+                    // Trường hợp 2: Nếu sản phẩm đã có trong giỏ rồi
+
                     // Item already exist in the cart => we have to update the quantity
                     // Set a new quantity
+
+                    // Nếu sản phẩm đó có sẵn trong giỏ hàng rồi thì mình chỉ việc update lại số lượng sản phẩm thôi
+                    // SL sản phẩm mới = SL trước đó + SL người dùng vừa thêm vào
                     int newQuantity = cartItemInCart.Quantity + model.updateQuantityBy;
                     if(model.updateQuantityBy == 0 || newQuantity <= 0)
                     {

@@ -35,15 +35,17 @@ namespace DotNetBootcamp_API.Controllers
                 {
                     // Nếu truyền vào userId thì show ra orders của thằng đó thoai
                     _response.Result = orderHeaders.Where(u => u.ApplicationUserId == userId);
-                } else
-                {                   
+                }
+                else
+                {
                     // Còn nếu không truyền userId nào vô thì show ra tất cả orders lunnn
                     // Cái này để hiển thị trong trang admin
                     _response.Result = orderHeaders;
                 }
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string>() { ex.ToString() };
@@ -56,7 +58,7 @@ namespace DotNetBootcamp_API.Controllers
         {
             try
             {
-                if(id == 0)
+                if (id == 0)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
@@ -109,7 +111,7 @@ namespace DotNetBootcamp_API.Controllers
                 {
                     _db.OrderHeaders.Add(order);
                     _db.SaveChanges();
-                    foreach(var orderDetailDTO in orderHeaderDTO.OrderDetailsDTO)
+                    foreach (var orderDetailDTO in orderHeaderDTO.OrderDetailsDTO)
                     {
                         OrderDetails orderDetails = new()
                         {
@@ -127,10 +129,61 @@ namespace DotNetBootcamp_API.Controllers
                     _response.StatusCode = HttpStatusCode.Created;
                     return Ok(_response);
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string> { ex.ToString() };
+            }
+            return _response;
+        }
+        [HttpPut("id:int")]
+        public async Task<ActionResult<ApiResponse>> UpdateOrderHeader(int id, [FromBody] OrderHeaderUpdateDTO dto)
+        {
+            try
+            {
+                if(dto == null || id != dto.OrderHeaderId)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest();
+                }
+                OrderHeader orderFromDb = _db.OrderHeaders.FirstOrDefault(u => u.OrderHeaderId == id);
+                if(orderFromDb == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest();
+                }
+                if (!string.IsNullOrEmpty(dto.PickupName))
+                {
+                    orderFromDb.PickupName = dto.PickupName;
+                }
+                if (!string.IsNullOrEmpty(dto.PickupPhoneNumber))
+                {
+                    orderFromDb.PickupName = dto.PickupPhoneNumber;
+                }
+                if (!string.IsNullOrEmpty(dto.PickupEmail))
+                {
+                    orderFromDb.PickupName = dto.PickupEmail;
+                }
+                if (!string.IsNullOrEmpty(dto.StripePaymentIntentID))
+                {
+                    orderFromDb.PickupName = dto.StripePaymentIntentID;
+                }
+                if (!string.IsNullOrEmpty(dto.Status))
+                {
+                    orderFromDb.PickupName = dto.Status;
+                }
+                _db.SaveChanges();
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
             }
             return _response;
         }
