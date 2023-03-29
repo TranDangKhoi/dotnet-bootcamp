@@ -56,12 +56,7 @@ D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0
 D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
 D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
-D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
-D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
-D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\obj\Debug\net7.0\DotNetBootcamp_API.csproj.AssemblyReference.cache
 D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\obj\Debug\net7.0\DotNetBootcamp_API.GeneratedMSBuildEditorConfig.editorconfig
 D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\obj\Debug\net7.0\DotNetBootcamp_API.AssemblyInfoInputs.cache
@@ -83,3 +78,10 @@ D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\obj\Debug\net7.0
 D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\obj\Debug\net7.0\DotNetBootcamp_API.pdb
 D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\obj\Debug\net7.0\DotNetBootcamp_API.genruntimeconfig.cache
 D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\obj\Debug\net7.0\ref\DotNetBootcamp_API.dll
+D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\Newtonsoft.Json.dll
+D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\Stripe.net.dll
+D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Github\dotnet-bootcamp\DotNetBootcamp_API\DotNetBootcamp_API\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll

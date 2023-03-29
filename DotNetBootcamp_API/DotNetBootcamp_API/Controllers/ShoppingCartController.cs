@@ -25,16 +25,17 @@ namespace DotNetBootcamp_API.Controllers
         {
             try
             {
+                ShoppingCart shoppingCart;
                 if(string.IsNullOrEmpty(userId))
                 {
-                    _response.IsSuccess = false;
-                    _response.StatusCode = HttpStatusCode.BadRequest;
-                    return BadRequest(_response);
+                    shoppingCart = new();
+                } else
+                {
+                    shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems)
+                    .ThenInclude(u => u.MenuItem)
+                    .FirstOrDefault(u => u.UserId == userId);
                 }
                 // Trong cart thì chỉ có cart items, còn trong cart items thì mới có menu items nên phải dùng ThenInclude
-                ShoppingCart shoppingCart = _db.ShoppingCarts.Include(u => u.CartItems)
-                    .ThenInclude(u => u.MenuItem)
-                    .FirstOrDefault(u=>u.UserId == userId);
                 if(shoppingCart.CartItems != null && shoppingCart.CartItems.Count > 0)
                 {
                 shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => u.Quantity*u.MenuItem.Price);

@@ -16,8 +16,8 @@ namespace DotNetBootcamp_API.Controllers
     public class MenuItemController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
-        private readonly IBlobService _blobService;
         private ApiResponse _response;
+        private readonly IBlobService _blobService;
         public MenuItemController(ApplicationDbContext db, IBlobService blobService)
         {
             _db = db;
